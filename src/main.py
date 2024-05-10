@@ -454,18 +454,21 @@ def check_statement(connection):
     end_time = input("Input end time in format yyyy-mm-dd: ").strip()
     if not end_time:
         end_time = "9999-12-31"
-    with connection.cursor() as cursor:
-        cursor.execute("""
-            SELECT * FROM transactions
-            WHERE transaction_time >= %s AND transaction_time <= %s;
-        """, (start_time, end_time))
-        transactions = cursor.fetchall()
-        if not transactions:
-            print("No transactions found.")
-            return
-        print("Transactions: [id, user_id, book_id, time, quantity, balance_change]")
-        for transaction in transactions: 
-            print(transaction)
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT * FROM transactions
+                WHERE transaction_time >= %s AND transaction_time <= %s;
+            """, (start_time, end_time))
+            transactions = cursor.fetchall()
+            if not transactions:
+                print("No transactions found.")
+                return
+            print("Transactions: [id, user_id, book_id, time, quantity, balance_change]")
+            for transaction in transactions: 
+                print(transaction)
+    except Exception as e:
+        print("An error occurred:", e)
 
 def add_normal_user(connection):
     username = input("Enter username: ")
