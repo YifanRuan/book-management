@@ -389,16 +389,16 @@ def add_new_books(connection):
                 SET quantity = quantity + COALESCE((
                         SELECT SUM(quantity)
                         FROM imports
-                        WHERE book_id in {query.strip(';')} AND is_paid = TRUE
+                        WHERE book_id in ({query.strip(';')}) AND is_paid = TRUE
                     ), 0),  -- 如果没有记录，则加 0
                     sale_price = %s  -- 更新销售价格
-                WHERE id in {query.strip(';')};
+                WHERE id in ({query.strip(';')});
             """, params + [sale_price] + params)
             
             # 接着删除已支付的 imports 记录
             cursor.execute(f"""
                 DELETE FROM imports
-                WHERE book_id in {query.strip(';')} AND is_paid = TRUE;
+                WHERE book_id in ({query.strip(';')}) AND is_paid = TRUE;
             """, params)
             
             # 提交事务
