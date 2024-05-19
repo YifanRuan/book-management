@@ -12,7 +12,7 @@
 
 ## Usage
 
-- Create `book_management` database in psql
+- Create a `book_management` database in psql
 
 - Run `psql book_management -f db_setup.sql`
 
