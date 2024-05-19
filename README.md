@@ -6,9 +6,9 @@
 
 - Python; Tested on python@3.12
 
-- bcrypt
+    + bcrypt
 
-- psycopg2
+    + psycopg2
 
 ## Usage
 
